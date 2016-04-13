@@ -1,9 +1,9 @@
 <html>
 <head>
-    <title> Book Store </title>
+    <title align> Book Store </title>
 </head>
-    <h1>Welcome to the Book Store</h1>
-    <h2>Added Cart Items will be displayed at the bottom of the page!</h2>
+    <h1 align="center">Welcome to the Book Store</h1>
+    <h2 align="center">Added Cart Items will be displayed at the bottom of the page!</h2>
 <script type="text/javascript"> 
 function showHide(divId){
     var theDiv = document.getElementById(divId);
@@ -22,6 +22,7 @@ function showHide(divId){
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link href='http://fonts.googleapis.com/css?family=Vollkorn:400,700' rel='stylesheet' type='text/css'>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <div align="center">
 <select name = "selection">
   <option value="">Select Filter Here</option>
   <option value=1>Author</option>
@@ -37,6 +38,7 @@ function showHide(divId){
     <input type="submit" value="Submit"><br>
 </div>
 </form>
+</div>
 <div class="products">
 <?php
 //filter sections
@@ -90,7 +92,7 @@ $results = $mysqli->query($sql);
 if($results){ 
 $products_item = '';
 //fetch results set as object and output HTML
-echo '<div class="box-table"><table>
+echo '<div class="box-table" align="center"><table >
 <th>Author</th>' . '<th>Title</th>' . '<th>Category</th>'. '<th>Description</th>'.'<th>Price</th>'. '<th>Add to Cart</th>';
 while($obj = $results->fetch_object())
 {
@@ -125,7 +127,7 @@ EOT;
 </table>
 <div>
 <h2>Your Shopping Cart</h2>
-<?php
+<?php //so it does delete, but it also clones tables need to delete...
 if(isset($_SESSION["cart_products"]) && count($_SESSION["cart_products"])>0)
 {
     echo '<div>';
@@ -137,18 +139,18 @@ if(isset($_SESSION["cart_products"]) && count($_SESSION["cart_products"])>0)
     $total =0;
     foreach ($_SESSION["cart_products"] as $cart_itm)
     {
-        $product_name = $cart_itm["product_name"];
+        $product_code = $cart_itm['product_code'];//FINALLY, needed to reference the array to take in NON global $product_code!!!!! 
+        $product_name = $cart_itm["product_name"];//only to find out that we dont even have to remove items from cart... 
         $product_qty = $cart_itm["product_qty"];
         $product_price = $cart_itm["product_price"];
-     
-        
+        if($product_name !=null){
         echo '<tr>';
         echo '<td>Qty <input type="text" size="2" maxlength="2" name="product_qty['.$product_code.']" value="'.$product_qty.'" /></td>';
         echo '<td>'.$product_name.'</td>';
         echo '<td><input type="checkbox" name="remove_code[]" value="'.$product_code.'" /> Remove</td>';
         echo '</tr>';
         $subtotal = ($product_price * $product_qty);
-        $total = ($total + $subtotal);
+        $total = ($total + $subtotal);}
     }
     echo '<td colspan="4">';
     echo '<button type="submit">Update</button><a href="view_cart.php">Checkout</a>';
@@ -160,9 +162,7 @@ if(isset($_SESSION["cart_products"]) && count($_SESSION["cart_products"])>0)
     echo '<input type="hidden" name="return_url" value="'.$current_url.'" />';
     echo '</form>';
     echo '</div>';
-
 }
 ?>
 </div>
 </html>
-

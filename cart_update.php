@@ -53,7 +53,6 @@ if(isset($_POST["product_qty"]) || isset($_POST["remove_code"]))
         }   
     }
 }
-
 //back to return url
 $return_url = (isset($_POST["return_url"]))?urldecode($_POST["return_url"]):''; //return url
 header('Location:'.$return_url);

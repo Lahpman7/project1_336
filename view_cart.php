@@ -26,7 +26,7 @@ include_once("config.php");
 			$product_price = $cart_itm["product_price"];
 			$product_code = $cart_itm["product_code"];
 			$subtotal = ($product_price * $product_qty); //calculate Price x Qty
-			
+			if($product_name !=null){
 		  echo '<tr>';
 			echo '<td><input type="text" size="2" maxlength="2" name="product_qty['.$product_code.']" value="'.$product_qty.'" /></td>';
 			echo '<td>'.$product_name.'</td>';
@@ -36,6 +36,7 @@ include_once("config.php");
       echo '</tr>';
 			$total = ($total + $subtotal); //add subtotal to total var
           }
+        }
 		
 		$grand_total = $total + $shipping_cost; //grand total including shipping cost
 		foreach($taxes as $key => $value){ //list and calculate all taxes in array
