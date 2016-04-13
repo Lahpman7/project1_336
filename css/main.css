@@ -33,6 +33,13 @@ body{
 }
 /* = table
 ------------------------*/
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: black;
+}
 .box-table table{
   border-collapse:collapse;
   text-align:left;

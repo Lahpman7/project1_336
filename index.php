@@ -3,17 +3,10 @@
     <title align> Book Store </title>
 </head>
     <h1 align="center">Welcome to the Book Store</h1>
-    <h2 align="center">Added Cart Items will be displayed at the bottom of the page!</h2>
-<script type="text/javascript"> 
-function showHide(divId){
-    var theDiv = document.getElementById(divId);
-    if(theDiv.style.display=="block"){
-        theDiv.style.display="";
-    }
-    else{
-    theDiv.style.display="block";} 
-} 
-</script>
+    <h2 align="center">Added Cart Items will be displayed at the bottom of the page!</h2><br>
+    <div align = "center">
+<img src="http://www.friendsoflglibrary.org/wp-content/uploads/2012/07/bookstore-header.gif">
+    </div><br>
 <?php
     session_start();
     include_once("config.php");
@@ -22,7 +15,7 @@ function showHide(divId){
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link href='http://fonts.googleapis.com/css?family=Vollkorn:400,700' rel='stylesheet' type='text/css'>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <div align="center">
+<div align="center">
 <select name = "selection">
   <option value="">Select Filter Here</option>
   <option value=1>Author</option>
@@ -35,11 +28,11 @@ function showHide(divId){
   <option value=2>Price Descending</option>
 </select>
 <div>
-    <input type="submit" value="Submit"><br>
+    <input type="submit" value="Filter"><br>
 </div>
 </form>
 </div>
-<div class="products">
+<div>
 <?php
 //filter sections
 $sql = "SELECT Books.title, Categories.genre, Author.author, Description.info ,Books.price, Books.bid
@@ -96,13 +89,23 @@ echo '<div class="box-table" align="center"><table >
 <th>Author</th>' . '<th>Title</th>' . '<th>Category</th>'. '<th>Description</th>'.'<th>Price</th>'. '<th>Add to Cart</th>';
 while($obj = $results->fetch_object())
 {
+    global $descr;
+    $descr = $obj->info;
+    
 $products_item .= <<<EOT
     <tr>
     <form method="post" action="cart_update.php">
     <td>{$obj->author}</td>
     <td>{$obj->title}</td>
     <td>{$obj->genre}</td>
-    <td><input type="button" onclick="showHide('hidethis')" value="Show Description"> <div id="hidethis" style="">{$obj->info}</div></td>
+    <td><input type="button" onclick='showHide()' value="Show Description"></td>
+    <script type="text/javascript"> 
+    
+        function showHide(){
+          window.alert('<?$obj->info;?>');
+            
+        }
+    </script>
     <td>{$obj->price}</td>
     <td>
     

@@ -9,15 +9,20 @@ include_once("config.php");
 <link href="css/main.css" rel="stylesheet" type="text/css"></head>
 <body>
 <h1 align="center">View Cart</h1>
-<div class="box-table">
+<br><div align = "center">
+		<img src="http://www.graphicsfuel.com/wp-content/uploads/2012/01/shopping-cart-icon-515.png"
+		width="120" height="120" >
+    </div><br>
+    
+<div class="box-table" align = "center" >
 <form method="post" action="cart_update.php">
-<table width="100%"  cellpadding="6" cellspacing="0"><thead><tr><th>Quantity</th><th>Name</th><th>Price</th><th>Total</th><th>Remove</th></tr></thead>
+<table width="100%"  cellpadding="6" cellspacing="0">
+	<thead><tr><th>Quantity</th><th>Name</th><th>Price</th><th>Total</th><th>Remove</th></tr></thead>
   <tbody>
  	<?php
-	if(isset($_SESSION["cart_products"])) //check session var
+	if(isset($_SESSION["cart_products"])) //check session 
     {
 		$total = 0; //set initial total value
-		$b = 0; //var for zebra stripe table
 		foreach ($_SESSION["cart_products"] as $cart_itm)
         {
 			//set variables to use in content below
@@ -25,21 +30,21 @@ include_once("config.php");
 			$product_qty = $cart_itm["product_qty"];
 			$product_price = $cart_itm["product_price"];
 			$product_code = $cart_itm["product_code"];
-			$subtotal = ($product_price * $product_qty); //calculate Price x Qty
+			$subtotal = ($product_price * $product_qty); //calculate Price*Qty
 			if($product_name !=null){
-		  echo '<tr>';
+		    echo '<tr>';
 			echo '<td><input type="text" size="2" maxlength="2" name="product_qty['.$product_code.']" value="'.$product_qty.'" /></td>';
 			echo '<td>'.$product_name.'</td>';
 			echo '<td>'.$currency.$product_price.'</td>';
 			echo '<td>'.$currency.$subtotal.'</td>';
 			echo '<td><input type="checkbox" name="remove_code[]" value="'.$product_code.'" /></td>';
-      echo '</tr>';
+            echo '</tr>';
 			$total = ($total + $subtotal); //add subtotal to total var
           }
         }
 		
-		$grand_total = $total + $shipping_cost; //grand total including shipping cost
-		foreach($taxes as $key => $value){ //list and calculate all taxes in array
+	        	$grand_total = $total + $shipping_cost; //grand total including shipping cost
+		foreach($taxes as $key => $value){ //list and calculate all taxes 
 				$tax_amount     = round($total * ($value / 100));
 				$tax_item[$key] = $tax_amount;
 				$grand_total    = $grand_total + $tax_amount;  //add tax val to grand total
@@ -53,7 +58,7 @@ include_once("config.php");
 	}
     ?>
     <tr><td colspan="5"><span style="float:right;text-align: right;"><?php echo $shipping_cost. $list_tax; ?>Amount Payable : <?php echo sprintf("%01.2f", $grand_total);?></span></td></tr>
-    <tr><td colspan="5"><a href="index.php" class="button">Add More Items</a><button type="submit">Update</button></td></tr>
+    <tr><td colspan="5"><a href="index.php">Add More Items </a><button type="submit">Update</button></td></tr>
   </tbody>
 </table>
 <input type="hidden" name="return_url" value="<?php 

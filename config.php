@@ -8,8 +8,7 @@ $db_host = getenv('IP');
                   
 
 $shipping_cost      = 1.50; //shipping cost
-$taxes              = array( //List your Taxes percent here.
-                            'VAT' => 12, 
+$taxes              = array( //List your Taxes percent h
                             'Service Tax' => 5
                             );                      
 //connect to MySql                      
